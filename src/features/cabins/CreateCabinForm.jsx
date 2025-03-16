@@ -28,7 +28,6 @@ function CreateCabinForm() {
   });
 
   function onSubmit(data) {
-    console.log(data);
     mutate(data);
   }
 
