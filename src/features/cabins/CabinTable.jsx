@@ -43,7 +43,7 @@ function CabinTable() {
 
   return (
     <Table role="table">
-      <TableHeader role="role">
+      <TableHeader role="row">
         <div></div>
         <div>Cabin</div>
         <div>Capacity</div>
