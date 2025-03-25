@@ -10,7 +10,7 @@ import Textarea from "../../ui/Textarea";
 import { createCabin } from "../../services/apiCabins";
 import FormRow from "../../ui/FormRow";
 
-function CreateCabinForm() {
+function CreateCabinFormV1() {
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { errors } = formState;
   const queryClient = useQueryClient();
@@ -118,4 +118,4 @@ function CreateCabinForm() {
   );
 }
 
-export default CreateCabinForm;
+export default CreateCabinFormV1;

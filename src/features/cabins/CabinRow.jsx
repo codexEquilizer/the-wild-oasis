@@ -4,6 +4,8 @@ import styled from "styled-components";
 
 import { formatCurrency } from "../../utils/helpers";
 import { deleteCabins } from "../../services/apiCabins";
+import { useState } from "react";
+import CreateCabinFormV2 from "./CreateCabinForm-v2";
 
 const TableRow = styled.div`
   display: grid;
@@ -45,6 +47,7 @@ const Discount = styled.div`
 `;
 
 function CabinRow({ cabin }) {
+  const [showEdit, setShowEdit] = useState(false);
   const {
     id: cabinId,
     name,
@@ -67,16 +70,22 @@ function CabinRow({ cabin }) {
   });
 
   return (
-    <TableRow role="row">
-      <Img src={image} />
-      <Cabin>{name}</Cabin>
-      <div>Fits upto {maxCapacity}</div>
-      <Price>{formatCurrency(regularPrice)}</Price>
-      <Discount>{formatCurrency(discount)}</Discount>
-      <button onClick={() => mutate(cabinId)} disabled={isDeleting}>
-        Delete
-      </button>
-    </TableRow>
+    <>
+      <TableRow role="row">
+        <Img src={image} />
+        <Cabin>{name}</Cabin>
+        <div>Fits upto {maxCapacity}</div>
+        <Price>{formatCurrency(regularPrice)}</Price>
+        <Discount>{formatCurrency(discount)}</Discount>
+        <div>
+          <button onClick={() => setShowEdit((show) => !show)}>Edit</button>
+          <button onClick={() => mutate(cabinId)} disabled={isDeleting}>
+            Delete
+          </button>
+        </div>
+      </TableRow>
+      {showEdit && <CreateCabinFormV2 cabinToEdit={cabin} />}
+    </>
   );
 }
 
