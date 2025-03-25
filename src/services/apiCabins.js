@@ -28,11 +28,12 @@ export async function deleteCabins(id) {
 export async function createCabin(newCabin) {
   const imageName = `${uuidv4()}-${newCabin.image.name}`.replaceAll("/", "");
   const imagePath = `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
+  const hasImagePath = Boolean(typeof newCabin.image === "string"); // Using this specifically for Duplicate Cabin functionality
 
   //1. Create the cabin
   const { data, error } = await supabase
     .from("cabins")
-    .insert([{ ...newCabin, image: imagePath }])
+    .insert([{ ...newCabin, image: hasImagePath ? newCabin.image : imagePath }])
     .select()
     .single();
 

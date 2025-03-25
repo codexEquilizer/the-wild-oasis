@@ -16,7 +16,7 @@ function CreateCabinFormV2({ cabinToEdit = {} }) {
   });
   const { errors } = formState;
 
-  const { mutate, isWorking } = useCreateEditCabin(isEditSession, reset);
+  const { mutate, isWorking } = useCreateEditCabin(isEditSession);
 
   function onSubmit(data) {
     console.log(data);
@@ -26,7 +26,7 @@ function CreateCabinFormV2({ cabinToEdit = {} }) {
     image = typeof data.image === "string" ? data.image : data.image[0];
     if (isEditSession) {
       mutate({ ...data, image: image }); // For Editing Cabin
-    } else mutate({ ...data, image: image }); //For Creating Cabin
+    } else mutate({ ...data, image: image }, { onSuccess: () => reset() }); //For Creating Cabin
   }
 
   function onError(error) {

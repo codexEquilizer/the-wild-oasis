@@ -1,10 +1,13 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import styled from "styled-components";
+import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 
 import CreateCabinFormV2 from "./CreateCabinForm-v2";
 import { useDeleteCabin } from "./useDeleteCabin";
 
 import { formatCurrency } from "../../utils/helpers";
+import { useCreateEditCabin } from "./useCreateEditCabin";
 
 const TableRow = styled.div`
   display: grid;
@@ -54,9 +57,23 @@ function CabinRow({ cabin }) {
     regularPrice,
     discount,
     image,
+    description,
   } = cabin;
 
   const { deleteCabin, isDeleting } = useDeleteCabin();
+  const { mutate: createCabin, isWorking } = useCreateEditCabin();
+
+  function handleDuplicate() {
+    // create duplicate cabin
+    createCabin({
+      name: `Copy of ${name}`,
+      maxCapacity,
+      regularPrice,
+      discount,
+      image,
+      description,
+    });
+  }
 
   return (
     <>
@@ -71,9 +88,14 @@ function CabinRow({ cabin }) {
           <span>&mdash;</span>
         )}
         <div>
-          <button onClick={() => setShowEdit((show) => !show)}>Edit</button>
+          <button onClick={handleDuplicate} disabled={isWorking}>
+            <HiSquare2Stack />
+          </button>
+          <button onClick={() => setShowEdit((show) => !show)}>
+            <HiPencil />
+          </button>
           <button onClick={() => deleteCabin(cabinId)} disabled={isDeleting}>
-            Delete
+            <HiTrash />
           </button>
         </div>
       </TableRow>
