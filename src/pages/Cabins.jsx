@@ -1,11 +1,6 @@
-<<<<<<< HEAD
-import { useEffect } from "react";
-
-=======
 import { useState } from "react";
 import CabinTable from "../features/cabins/CabinTable";
 import Button from "../ui/Button";
->>>>>>> feature-remote-state-management
 import Heading from "../ui/Heading";
 import Row from "../ui/Row";
 import CreateCabinFormV2 from "../features/cabins/CreateCabinForm-v2";
