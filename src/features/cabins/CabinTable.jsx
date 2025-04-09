@@ -12,6 +12,7 @@ function CabinTable() {
 
   if (isLoading) return <Spinner />;
 
+  // FILTER
   const filterValue = searchParams.get("discount") || "all";
   let filterCabins;
   if (filterValue === "all") filterCabins = cabins;
@@ -19,6 +20,14 @@ function CabinTable() {
     filterCabins = cabins.filter((cabin) => cabin.discount === 0);
   if (filterValue === "with-discount")
     filterCabins = cabins.filter((cabin) => cabin.discount > 0);
+
+  // SORT
+  const sortBy = searchParams.get("sortBy") || "startDate-asc";
+  const [field, direction] = sortBy.split("-");
+  const modifier = direction === "asc" ? 1 : -1;
+  const sortedCabins = filterCabins.sort(
+    (a, b) => (a[field] - b[field]) * modifier
+  );
 
   return (
     <Menus>
@@ -33,7 +42,7 @@ function CabinTable() {
         </Table.Header>
         {/* Applying Render Props Pattern */}
         <Table.Body
-          data={filterCabins}
+          data={sortedCabins}
           render={(cabin) => <CabinRow cabin={cabin} key={cabin.id} />}
         />
       </Table>
