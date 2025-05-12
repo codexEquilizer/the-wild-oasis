@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { HiArrowDownOnSquare } from "react-icons/hi2";
+import { useNavigate } from "react-router-dom";
 
 import BookingDataBox from "./BookingDataBox";
 import Row from "../../ui/Row";
@@ -21,6 +23,7 @@ const HeadingGroup = styled.div`
 function BookingDetail() {
   const { booking = {}, isLoading } = useBooking();
   const { status, id: bookingId } = booking;
+  const navigate = useNavigate();
 
   const moveBack = useMoveBack();
 
@@ -45,6 +48,15 @@ function BookingDetail() {
       <BookingDataBox booking={booking} />
 
       <ButtonGroup>
+        {status === "unconfirmed" && (
+          <Button
+            icon={<HiArrowDownOnSquare />}
+            onClick={() => navigate(`/checkin/${bookingId}`)}
+          >
+            Check in
+          </Button>
+        )}
+
         <Button variation="secondary" onClick={moveBack}>
           Back
         </Button>
